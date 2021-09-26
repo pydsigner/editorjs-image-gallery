@@ -25,13 +25,13 @@ Works only with image URLs and requires no server-side uploader.
 Get the package
 
 ```shell
-npm i --save-dev @rodrigoodhin/image-gallery
+npm i --save-dev @rodrigoodhin/editorjs-image-gallery
 ```
 
 Include module at your application
 
 ```javascript
-const ImageGallery = require('@rodrigoodhin/image-gallery');
+const ImageGallery = require('@rodrigoodhin/editorjs-image-gallery');
 ```
 
 &nbsp;
@@ -49,9 +49,9 @@ const ImageGallery = require('@rodrigoodhin/image-gallery');
 
 ### Load from CDN
 
-You can load specific version of package from [jsDelivr CDN](https://www.npmjs.com/package/@rodrigoodhin/image-gallery).
+You can load specific version of package from [jsDelivr CDN](https://www.npmjs.com/package/@rodrigoodhin/editorjs-image-gallery).
 
-`https://cdn.jsdelivr.net/npm/@rodrigoodhin/image-gallery@latest`
+`https://cdn.jsdelivr.net/npm/@rodrigoodhin/editorjs-image-gallery@latest`
 
 Then require this script on page with Editor.js.
 
