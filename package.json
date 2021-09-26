@@ -1,6 +1,6 @@
 {
-  "name": "@rodrigoodhin/image-gallery",
-  "version": "1.0.1",
+  "name": "@rodrigoodhin/editorjs-image-gallery",
+  "version": "0.1.0",
   "keywords": [
     "codex editor",
     "tool",
@@ -12,7 +12,7 @@
   ],
   "description": "ImageGallery Tool for Editor.js",
   "license": "MIT",
-  "repository": "https://github.com/rodrigoodhin/editorjs-image-gallery",
+  "repository": "https://gitlab.com/rodrigoodhin/editorjs-image-gallery",
   "main": "./dist/bundle.js",
   "scripts": {
     "build": "webpack --mode production",
