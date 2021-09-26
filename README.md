@@ -1,9 +1,16 @@
-# Image Gallery Tool for Editor.js  
-
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)  
-
+<div align="center">
+<img width="300" src="https://i.ibb.co/PtY33xF/logo-small.png" alt="editorjs-image-gallery logo">
+<br><br>
+<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" >
+<img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" >
+<img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" >
+<br><br><br>
 <a href="#"><img src="https://img.shields.io/badge/Editor.js-2.22.2-blue"></a>
 <a href="https://paypal.me/rodrigoodhin"><img src="https://img.shields.io/badge/donate-PayPal-blue"></a>
+</div>
+
+
+# Image Gallery Tool for Editor.js  
 
 Image Gallery Tool is a plugin for [Editor.js](https://editorjs.io) that's provides an Image Gallery Block and using the available options, it's possible to adapt the layout as you like.
 
