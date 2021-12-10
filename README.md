@@ -1,10 +1,12 @@
 <div align="center">
-<img width="600" src="https://i.ibb.co/FwR7j7z/logo-small.png" alt="editorjs-image-gallery logo">
-<br><br>
+
+![](/assets/logo_small.png "editorjs-image-gallery")
+
+<br>
 <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" >
 <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" >
 <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" >
-<br><br><br>
+<br><br>
 <a href="#"><img src="https://img.shields.io/badge/Editor.js-2.22.2-blue"></a>
 <a href="https://paypal.me/rodrigoodhin"><img src="https://img.shields.io/badge/donate-PayPal-blue"></a>
 </div>
@@ -16,10 +18,10 @@ Image Gallery Tool is a plugin for [Editor.js](https://editorjs.io) that's provi
 
 Works only with image URLs and requires no server-side uploader.
 
-![](https://i.ibb.co/DWMtSG2/image-gallery-01-small.gif)
-![](https://i.ibb.co/mz2hMgQ/image-gallery-02-small.gif)
-![](https://i.ibb.co/HP8k3YD/image-gallery-03-small.gif)
-![](https://i.ibb.co/vXLFy89/image-gallery-04-small.gif)
+![](/assets/image_gallery_01_small.gif)
+![](/assets/image_gallery_02_small.gif)
+![](/assets/image_gallery_03_small.gif)
+![](/assets/image_gallery_04_small.gif)
 
 &nbsp;
 &nbsp;
@@ -101,7 +103,7 @@ This Tool has no config params
 
 ## Tool's settings
 
-![](https://i.ibb.co/zFhjngg/options-small.png)
+![](/assets/options_small.png)
 
 1. Show and hide image urls
 2. Activate/Deactivate dark mode
