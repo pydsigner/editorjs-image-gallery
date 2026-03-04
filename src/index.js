@@ -7,7 +7,7 @@ require('./gallery-grid/gallery-grid.css').toString();
 /**
  * Build gallery grid
  */
-const gg = require('./gallery-grid/gallery-grid');
+const GalleryGrid = require('./gallery-grid/gallery-grid');
 
 /**
  * ImageGallery Tool for the Editor.js
@@ -120,6 +120,7 @@ class ImageGallery {
          * Save block index
          */
         this.blockIndex = this.api.blocks.getCurrentBlockIndex();
+        this.gg = new GalleryGrid();
     }
 
     /**
@@ -301,8 +302,8 @@ class ImageGallery {
      */
     _acceptTuneView() {
 
-        let gallery = document.querySelector('div#image-gallery-' + this.blockIndex + ' > div.gg-box');
-        let urlsInput = document.querySelector('textarea.image-gallery-' + this.blockIndex);
+        let gallery = this.wrapper.querySelector('div.gg-box');
+        let urlsInput = this.wrapper.querySelector('textarea');
 
         if (gallery !== null) {
 
@@ -310,9 +311,7 @@ class ImageGallery {
                 gallery.removeAttribute(attr)
             });
 
-            gallery.className = '';
-            gallery.classList.add('gg-box');
-            gallery.id = '';
+            gallery.className = 'gg-box';
 
             this.settings.forEach(tune => {
                 switch (tune.name) {
@@ -325,8 +324,7 @@ class ImageGallery {
                     case 'bkgMode':
                         if (this.data.bkgMode) {
                             gallery.classList.add('dark');
-                            gg.galleryOptions({
-                                selector: ".dark",
+                            this.gg.galleryOptions(gallery, {
                                 darkMode: true
                             });
                         }
@@ -335,36 +333,28 @@ class ImageGallery {
                         break;
                     case 'layoutHorizontal':
                         if (this.data.layoutHorizontal) {
-                            gallery.id = 'horizontal';
-                            gg.galleryOptions({
-                                selector: "#horizontal",
+                            this.gg.galleryOptions(gallery, {
                                 layout: "horizontal"
                             });
                         }
                         break;
                     case 'layoutSquare':
                         if (this.data.layoutSquare) {
-                            gallery.id = 'square';
-                            gg.galleryOptions({
-                                selector: "#square",
+                            this.gg.galleryOptions(gallery, {
                                 layout: "square"
                             });
                         }
                         break;
                     case 'layoutWithGap':
                         if (this.data.layoutWithGap) {
-                            gallery.id = 'gap';
-                            gg.galleryOptions({
-                                selector: "#gap",
+                            this.gg.galleryOptions(gallery, {
                                 gapLength: 10
                             });
                         }
                         break;
                     case 'layoutWithFixedSize':
                         if (this.data.layoutWithFixedSize) {
-                            gallery.id = 'heightWidth';
-                            gg.galleryOptions({
-                                selector: "#heightWidth",
+                            this.gg.galleryOptions(gallery, {
                                 rowHeight: 180,
                                 columnWidth: 280
                             });
@@ -385,7 +375,7 @@ class ImageGallery {
 
         let imgCount = 0
 
-        const oldContainers = document.querySelectorAll('#image-gallery-' + this.blockIndex);
+        const oldContainers = this.wrapper.querySelectorAll('.gg-container');
         oldContainers.forEach((oldContainer) => {
             if (oldContainer !== null) {
                 oldContainer.remove();
@@ -399,7 +389,7 @@ class ImageGallery {
             if (this._isImgUrl(url) != null) {
                 imgCount += 1;
                 let img = document.createElement('img');
-                img.id = 'gg-img-' + index;
+                img.id = `gg-img-${this.blockIndex}-${index}`;
                 img.src = url.toString().trim();
                 box.appendChild(img);
             }
@@ -407,14 +397,13 @@ class ImageGallery {
 
         const gallery = document.createElement('div');
         gallery.className = 'gg-container';
-        gallery.id = 'image-gallery-' + this.blockIndex;
         gallery.appendChild(box)
 
         //this.wrapper.innerHTML = ''; // Hide url input after paste
 
         if (imgCount > 0) this.wrapper.appendChild(gallery);
 
-        gg.loadGallery();
+        this.gg.loadGallery(gallery);
 
         this._acceptTuneView();
     }

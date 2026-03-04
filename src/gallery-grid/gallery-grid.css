@@ -9,7 +9,7 @@
     --column-width: 220px;
 }
 
-.gg-container *[data-theme="dark"] {
+.gg-container .gg-screen[data-theme="dark"] {
     --main-color: #ddd;
     --secondary-color: #eee;
     --txt-color: #111;
@@ -37,7 +37,7 @@
     opacity: 0.98;
 }
 
-#gg-screen {
+.gg-screen {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -48,14 +48,14 @@
     text-align: center;
 }
 
-#gg-screen .gg-image {
+.gg-screen .gg-image {
     height: 100%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
-#gg-screen .gg-image img {
+.gg-screen .gg-image img {
     max-width: 96%;
     max-height: 96%;
     margin: 0 auto;
