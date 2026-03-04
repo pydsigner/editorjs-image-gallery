@@ -39,7 +39,7 @@ class ImageGallery {
      *   api - Editor.js API
      */
     constructor({data, api}) {
-        
+
         /**
          * Nodes cache
          */
@@ -54,7 +54,7 @@ class ImageGallery {
             layoutWithGap: null,
             layoutWithFixedSize: null,
         };
-        
+
         /**
          * Tool's initial data
          */
@@ -250,13 +250,23 @@ class ImageGallery {
             let button = document.createElement('div');
 
             button.classList.add('cdx-settings-button');
+            if (this.data[tune.name]) {
+                button.classList.add('cdx-settings-button--active');
+            }
             button.innerHTML = tune.icon;
             button.title = tune.title;
+            button.dataset.tuneName = tune.name;
             wrp.appendChild(button);
 
             button.addEventListener('click', () => {
                 this._toggleTune(tune.name);
-                button.classList.toggle('cdx-settings-button--active');
+                wrp.querySelectorAll('.cdx-settings-button').forEach(e => {
+                    if (this.data[e.dataset.tuneName]) {
+                        e.classList.add('cdx-settings-button--active');
+                    } else {
+                        e.classList.remove('cdx-settings-button--active');
+                    }
+                });
             });
         });
 
