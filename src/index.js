@@ -23,6 +23,12 @@ const GalleryGrid = require('./gallery-grid/gallery-grid');
  * @property {boolean} layoutWithGap - should layout be with gap
  * @property {boolean} layoutWithFixedSize - should layout be with fixed size
  */
+
+/**
+ * @typedef {object} ImageGalleryConfig
+ * @property {function():Promise<string[]>} [addImages] - Callback that should launch a file picker and return URLs. Replaces default URL text entry.
+ */
+
 class ImageGallery {
     static get toolbox() {
         return {
@@ -34,12 +40,14 @@ class ImageGallery {
     /**
      * Render plugin`s main Element and fill it with saved data
      *
-     * @param {{data: ImageGalleryData, api: object}}
+     * @param {{data: ImageGalleryData, config: ImageGalleryConfig, api: object}}
      *   data — previously saved data
      *   api - Editor.js API
      */
-    constructor({data, api}) {
+    constructor({data, config, api}) {
 
+        this.config = config
+        this.addImages = config.addImages
         /**
          * Nodes cache
          */
@@ -80,11 +88,6 @@ class ImageGallery {
          */
         this.settings = [
             {
-                name: 'editImages',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>`,
-                title: 'Edit Images',
-            },
-            {
                 name: 'bkgMode',
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layers-fill" viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882l7.5-4z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0l-5.17-2.756z"/></svg>`,
                 title: 'Background Mode',
@@ -115,6 +118,19 @@ class ImageGallery {
                 title: 'Layout With Fixed Size',
             },
         ];
+        if (this.addImages) {
+            this.settings.splice(0, 0, {
+                name: 'addImages',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16"><path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"/></svg>',
+                title: 'Add Images'
+            });
+        } else {
+            this.settings.splice(0, 0, {
+                name: 'editImages',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>`,
+                title: 'Edit Images',
+            });
+        }
 
         /**
          * Save block index
@@ -138,26 +154,28 @@ class ImageGallery {
         if (this.data && this.data.urls) {
             this._imageGallery(this.data.urls);
             return this.wrapper;
+        } else if (this.addImages) {
+            this._toggleTune('addImages');
         }
 
         let urls
 
-        const textarea = document.createElement('textarea');
-        textarea.className = "image-gallery-" + this.blockIndex;
-        textarea.placeholder = 'Paste your photos URL ...';
-        ['paste', 'change', 'keyup'].forEach(evt =>
-            textarea.addEventListener(evt, (event) => {
-                if (evt === 'paste')
-                    urls = event.clipboardData.getData('text').split("\n");
-                else
-                    urls = textarea.value.split("\n");
-                this._imageGallery(urls);
-            }, false)
-        );
-
-        textarea.value = this.data && this.data.urls ? this.data.urls : '';
-
-        this.wrapper.appendChild(textarea);
+        if (!this.addImages) {
+            const textarea = document.createElement('textarea');
+            textarea.className = "image-gallery-" + this.blockIndex;
+            textarea.placeholder = 'Paste your photos URL ...';
+            ['paste', 'change', 'keyup'].forEach(evt =>
+                textarea.addEventListener(evt, (event) => {
+                    if (evt === 'paste')
+                        urls = event.clipboardData.getData('text').split("\n");
+                    else
+                        urls = textarea.value.split("\n");
+                    this._imageGallery(urls);
+                }, false)
+            );
+            textarea.value = this.data && this.data.urls ? this.data.urls : '';
+            this.wrapper.appendChild(textarea);
+        }
 
         this.nodes.wrapper = this.wrapper;
         this.nodes.urls = urls;
@@ -282,9 +300,14 @@ class ImageGallery {
     _toggleTune(tune) {
         if (tune === "bkgMode" || tune === "editImages") {
             this.data[tune] = !this.data[tune];
+        } else if (tune === 'addImages') {
+            this.addImages().then((urls) => {
+                this.data.urls.push(...urls);
+                this._imageGallery(this.data.urls);
+            });
         } else {
             this.settings.forEach(t => {
-                if (t.name !== "bkgMode" && t.name !== "editImages") {
+                if (t.name.startsWith('layout')) {
                     if (t.name === tune)
                         this.data[t.name] = true;
                     else
