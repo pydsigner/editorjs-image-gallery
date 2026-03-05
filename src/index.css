@@ -17,3 +17,29 @@
 .textarea-hide {
     display: none !important;
 }
+
+
+.gg-img {
+    position: relative;
+}
+.gg-delete {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    right: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.gg-delete svg {
+    color: #fff;
+    filter: drop-shadow(0 0 2px rgb(0 0 0 / 0.4));
+}
+.gg-delete:hover svg {
+    color: #ddd;
+    filter: drop-shadow(0 0 3px rgb(0 0 0 / 0.6));
+}
+.gg-img:hover .gg-delete {
+    display: block;
+}

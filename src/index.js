@@ -372,7 +372,7 @@ export class ImageGallery {
      */
     _imageGallery(urls) {
 
-        let imgCount = 0
+        let imgCount = 0;
 
         const oldContainers = this.wrapper.querySelectorAll('.gg-container');
         oldContainers.forEach((oldContainer) => {
@@ -384,27 +384,40 @@ export class ImageGallery {
         const box = document.createElement('div');
         box.className = 'gg-box';
         const urlsInput = this.wrapper.querySelector('textarea');
+        const updateUrlsInput = () => {
+            if (urlsInput) {
+                urlsInput.value = Array.from(wrapper.querySelectorAll('.gg-box img')).map((img) => img.src).join('\n');
+            }
+        }
         const wrapper = this.wrapper;
         this.sortable = new Sortable(box, {
-            onSort() {
-                if (urlsInput) {
-                    urlsInput.value = Array.from(wrapper.querySelectorAll('.gg-box img')).map((img) => img.src).join('\n');
-                }
-            }
+            onSort: updateUrlsInput
         });
 
         urls.forEach((url, index) => {
             imgCount += 1;
-            let img = document.createElement('img');
-            img.src = url.toString().trim();
-            box.appendChild(img);
+            const imgWrap = document.createElement('div');
+            imgWrap.className = 'gg-img';
+            const deleteBtn = document.createElement('div');
+            deleteBtn.className = 'gg-delete';
+            deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">' +
+                '<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>' +
+                '</svg>';
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                imgWrap.remove();
+                updateUrlsInput();
+            });
+            imgWrap.appendChild(deleteBtn);
+            const img = document.createElement('img');
+            img.src = url;
+            imgWrap.appendChild(img);
+            box.appendChild(imgWrap);
         });
 
         const gallery = document.createElement('div');
         gallery.className = 'gg-container';
         gallery.appendChild(box)
-
-        //this.wrapper.innerHTML = ''; // Hide url input after paste
 
         if (imgCount > 0) this.wrapper.appendChild(gallery);
 

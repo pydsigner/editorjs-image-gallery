@@ -3,7 +3,7 @@ class GalleryGrid {
     loadGallery(container) {
 
         const root = document.querySelector("body, html");
-        const images = container.querySelectorAll(".gg-box > img");
+        const images = container.querySelectorAll(".gg-box img");
 
         images.forEach((image) => {
             image.addEventListener("click", function (i) {
@@ -21,9 +21,9 @@ class GalleryGrid {
 
                 const rootOverflow = root.style.overflow;
                 root.style.overflow = 'hidden';
-                screenItem.innerHTML = '<div class="gg-image"></div><div class="gg-close gg-btn">&times</div><div class="gg-next gg-btn">&rarr;</div><div class="gg-prev gg-btn">&larr;</div>';
+                screenItem.innerHTML = '<div class="gg-current-img"></div><div class="gg-close gg-btn">&times;</div><div class="gg-next gg-btn">&rarr;</div><div class="gg-prev gg-btn">&larr;</div>';
 
-                const imgItem = container.querySelector(".gg-image");
+                const imgItem = container.querySelector(".gg-current-img");
                 const prevBtn = container.querySelector(".gg-prev");
                 const nextBtn = container.querySelector(".gg-next")
                 const close = container.querySelector(".gg-close");
@@ -77,10 +77,6 @@ class GalleryGrid {
 
                 prevBtn.addEventListener("click", prev);
                 nextBtn.addEventListener("click", next);
-
-                const getMainImg = () => {
-                    return container.querySelector(".gg-image > img").id;
-                };
             });
         });
     }
