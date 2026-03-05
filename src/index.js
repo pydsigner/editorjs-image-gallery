@@ -175,15 +175,9 @@ export class ImageGallery {
      * @returns {ImageGalleryData}
      */
     save(blockContent) {
-        const photos = blockContent.querySelectorAll('img');
-        const imgUrls = [];
-
-        photos.forEach((img, index) => {
-            imgUrls[index] = img.src
-        });
-
+        const photos = blockContent.querySelectorAll('.gg-box img');
         return Object.assign(this.data, {
-            urls: imgUrls,
+            urls: Array.from(photos).map((img) => img.src),
         });
     }
 
