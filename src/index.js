@@ -157,20 +157,14 @@ class ImageGallery {
         } else if (this.addImages) {
             this._toggleTune('addImages');
         }
-
-        let urls
-
         if (!this.addImages) {
             const textarea = document.createElement('textarea');
             textarea.className = "image-gallery-" + this.blockIndex;
             textarea.placeholder = 'Paste your photos URL ...';
             ['paste', 'change', 'keyup'].forEach(evt =>
                 textarea.addEventListener(evt, (event) => {
-                    if (evt === 'paste')
-                        urls = event.clipboardData.getData('text').split("\n");
-                    else
-                        urls = textarea.value.split("\n");
-                    this._imageGallery(urls);
+                    const urls = (evt === 'paste' ? event.clipboardData.getData('text') : textarea.value);
+                    this._imageGallery(urls.split("\n").filter((v) => v.trim()));
                 }, false)
             );
             textarea.value = this.data && this.data.urls ? this.data.urls : '';
@@ -178,8 +172,6 @@ class ImageGallery {
         }
 
         this.nodes.wrapper = this.wrapper;
-        this.nodes.urls = urls;
-
         return this.wrapper;
     }
 
@@ -249,11 +241,7 @@ class ImageGallery {
      * @param {ImageGalleryData} data
      */
     set data(data) {
-            this._data = Object.assign({}, this.data, data);
-
-        if (this.nodes.urls) {
-            this.nodes.urls = this.data.urls;
-        }
+        this._data = Object.assign({}, this.data, data);
     }
 
     /**
