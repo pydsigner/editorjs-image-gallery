@@ -2,22 +2,20 @@ import './gallery-grid.less';
 
 export class GalleryGrid {
 
+    /**
+     * @param {Element} container
+     */
     loadGallery(container) {
-
         const root = document.querySelector("body, html");
-        const images = container.querySelectorAll(".gg-box img");
+        const images = container.querySelectorAll(".gg-box .gg-img");
 
         images.forEach((image) => {
             image.addEventListener("click", function (i) {
-                let nextImg;
-                let prevImg;
-                let currentImg = this;
-                const parentItem = currentImg.parentElement, screenItem = document.createElement('div');
+                let currentImg = image;
+                const screenItem = document.createElement('div');
 
                 screenItem.className = "gg-screen";
                 container.prepend(screenItem);
-
-                if (parentItem.hasAttribute('data-theme')) screenItem.setAttribute("data-theme", "dark");
 
                 let route = currentImg.id;
 
@@ -29,18 +27,24 @@ export class GalleryGrid {
                 const prevBtn = container.querySelector(".gg-prev");
                 const nextBtn = container.querySelector(".gg-next")
                 const close = container.querySelector(".gg-close");
-                imgItem.innerHTML = `<img src="${currentImg.src}"/>`;
 
-                if (currentImg.nextElementSibling) {
-                    nextImg = currentImg.nextElementSibling;
-                } else {
-                    nextBtn.hidden = true;
+                const updateSelection = () => {
+                    let src;
+                    if (currentImg.tagName === 'IMG') {
+                        src = currentImg.src;
+                    } else {
+                        src = currentImg.querySelector('img').src;
+                    }
+                    imgItem.innerHTML = `<img src="${src}"/>`;
+                    if (!currentImg.nextElementSibling) {
+                        nextBtn.hidden = true;
+                    }
+                    if (!currentImg.previousElementSibling) {
+                        prevBtn.hidden = true;
+                    }
                 }
-                if (currentImg.previousElementSibling) {
-                    prevImg = currentImg.previousElementSibling;
-                } else {
-                    prevBtn.hidden = true;
-                }
+
+                updateSelection();
 
                 screenItem.addEventListener("click", function (e) {
                     if (e.target === this || e.target === close) hide();
@@ -53,22 +57,16 @@ export class GalleryGrid {
                 });
 
                 const prev = () => {
-                    prevImg = currentImg.previousElementSibling;
-                    if (prevImg) {
-                        imgItem.innerHTML = `<img src="${prevImg.src}"/>`;
+                    if (currentImg.previousElementSibling) {
                         currentImg = currentImg.previousElementSibling;
-                        nextBtn.hidden = !Boolean(currentImg.nextElementSibling);
-                        prevBtn.hidden = !Boolean(currentImg.previousElementSibling);
+                        updateSelection();
                     }
                 };
 
                 const next = () => {
-                    nextImg = currentImg.nextElementSibling;
-                    if (nextImg) {
-                        imgItem.innerHTML = `<img src="${nextImg.src}"/>`;
+                    if (currentImg.nextElementSibling) {
                         currentImg = currentImg.nextElementSibling;
-                        nextBtn.hidden = !Boolean(currentImg.nextElementSibling);
-                        prevBtn.hidden = !Boolean(currentImg.previousElementSibling);
+                        updateSelection();
                     }
                 };
 
