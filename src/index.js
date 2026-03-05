@@ -4,10 +4,8 @@
 require('./index.css').toString();
 require('./gallery-grid/gallery-grid.css').toString();
 
-/**
- * Build gallery grid
- */
-const GalleryGrid = require('./gallery-grid/gallery-grid');
+import GalleryGrid from './gallery-grid/gallery-grid';
+import Sortable from 'sortablejs';
 
 /**
  * ImageGallery Tool for the Editor.js
@@ -29,7 +27,7 @@ const GalleryGrid = require('./gallery-grid/gallery-grid');
  * @property {function():Promise<string[]>} [addImages] - Callback that should launch a file picker and return URLs. Replaces default URL text entry.
  */
 
-class ImageGallery {
+export class ImageGallery {
     static get toolbox() {
         return {
             title: 'Image Gallery',
@@ -391,6 +389,15 @@ class ImageGallery {
 
         const box = document.createElement('div');
         box.className = 'gg-box';
+        const urlsInput = this.wrapper.querySelector('textarea');
+        const wrapper = this.wrapper;
+        this.sortable = new Sortable(box, {
+            onSort() {
+                if (urlsInput) {
+                    urlsInput.value = Array.from(wrapper.querySelectorAll('.gg-box img')).map((img) => img.src).join('\n');
+                }
+            }
+        });
 
         urls.forEach((url, index) => {
             imgCount += 1;
@@ -412,5 +419,3 @@ class ImageGallery {
         this._acceptTuneView();
     }
 }
-
-module.exports = ImageGallery;

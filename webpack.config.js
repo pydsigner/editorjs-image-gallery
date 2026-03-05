@@ -28,7 +28,7 @@ module.exports = {
         path: __dirname + '/dist',
         publicPath: '/',
         filename: 'bundle.js',
-        library: 'ImageGallery',
+        library: 'imageGallery',
         libraryTarget: 'umd'
     }
 };
