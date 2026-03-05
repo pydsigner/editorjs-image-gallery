@@ -296,68 +296,48 @@ export class ImageGallery {
      */
     _acceptTuneView() {
 
-        const gallery = this.wrapper.querySelector('div.gg-box');
+        const container = this.wrapper.querySelector('.gg-container');
         const urlsInput = this.wrapper.querySelector('textarea');
 
-        if (gallery !== null) {
-
-            gallery.getAttributeNames().forEach(attr => {
-                gallery.removeAttribute(attr)
-            });
-
-            gallery.className = 'gg-box';
-
-            this.settings.forEach(tune => {
-                switch (tune.name) {
-                    case 'editImages':
-                        if (this.data.editImages && urlsInput.classList.contains('textarea-hide'))
-                            urlsInput.classList.remove('textarea-hide');
-                        else if (!this.data.editImages && !urlsInput.classList.contains('textarea-hide'))
-                            urlsInput.classList.add('textarea-hide');
-                        break;
-                    case 'bkgMode':
-                        if (this.data.bkgMode) {
-                            gallery.classList.add('dark');
-                            this.gg.galleryOptions(gallery, {
-                                darkMode: true
-                            });
-                        }
-                        break;
-                    case 'layoutDefault':
-                        break;
-                    case 'layoutHorizontal':
-                        if (this.data.layoutHorizontal) {
-                            this.gg.galleryOptions(gallery, {
-                                layout: "horizontal"
-                            });
-                        }
-                        break;
-                    case 'layoutSquare':
-                        if (this.data.layoutSquare) {
-                            this.gg.galleryOptions(gallery, {
-                                layout: "square"
-                            });
-                        }
-                        break;
-                    case 'layoutWithGap':
-                        if (this.data.layoutWithGap) {
-                            this.gg.galleryOptions(gallery, {
-                                gapLength: 10
-                            });
-                        }
-                        break;
-                    case 'layoutWithFixedSize':
-                        if (this.data.layoutWithFixedSize) {
-                            this.gg.galleryOptions(gallery, {
-                                rowHeight: 180,
-                                columnWidth: 280
-                            });
-                        }
-                        break;
-                }
-            });
+        if (urlsInput) {
+            if (this.data.editImages) {
+                urlsInput.classList.remove('textarea-hide');
+            } else {
+                urlsInput.classList.add('textarea-hide');
+            }
         }
 
+        if (!container) {
+            return;
+        }
+
+        if (this.data.bkgMode) {
+            container.setAttribute("data-theme", "dark");
+        } else {
+            container.removeAttribute('data-theme');
+        }
+
+        if (this.data.layoutHorizontal) {
+            container.setAttribute('data-layout', 'horizontal');
+        } else if (this.data.layoutSquare) {
+            container.setAttribute('data-layout', 'square');
+        } else {
+            container.setAttribute('data-layout', 'default');
+        }
+
+        if (this.data.layoutWithGap) {
+            container.style.setProperty('--gap-length', '10px');
+        } else {
+            container.style.removeProperty('--gap-length');
+        }
+
+        if (this.data.layoutWithFixedSize) {
+            container.style.setProperty('--row-height', '180px');
+            container.style.setProperty('--column-width', '280px');
+        } else {
+            container.style.removeProperty('--row-height');
+            container.style.removeProperty('--column-width');
+        }
     }
 
     /**

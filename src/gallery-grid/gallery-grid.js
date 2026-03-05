@@ -82,12 +82,4 @@ export class GalleryGrid {
             });
         });
     }
-
-    galleryOptions(element, options) {
-        if (options.darkMode) element.setAttribute("data-theme", "dark");
-        if (options.layout === "horizontal" || options.layout === "square") element.setAttribute("data-layout", options.layout);
-        if (options.gapLength) element.style.setProperty('--gap-length', options.gapLength + 'px');
-        if (options.rowHeight) element.style.setProperty('--row-height', options.rowHeight + 'px');
-        if (options.columnWidth) element.style.setProperty('--column-width', options.columnWidth + 'px');
-    }
 }
