@@ -206,7 +206,7 @@ class ImageGallery {
         let indexCount = 0;
 
         savedData.urls.forEach((url) => {
-            if (url.trim() !== "" && this._isImgUrl(url)) {
+            if (url.trim()) {
                 imagesToSave[indexCount] = url;
                 indexCount++;
             }
@@ -409,13 +409,11 @@ class ImageGallery {
         box.className = 'gg-box';
 
         urls.forEach((url, index) => {
-            if (this._isImgUrl(url) != null) {
-                imgCount += 1;
-                let img = document.createElement('img');
-                img.id = `gg-img-${this.blockIndex}-${index}`;
-                img.src = url.toString().trim();
-                box.appendChild(img);
-            }
+            imgCount += 1;
+            let img = document.createElement('img');
+            img.id = `gg-img-${this.blockIndex}-${index}`;
+            img.src = url.toString().trim();
+            box.appendChild(img);
         });
 
         const gallery = document.createElement('div');
@@ -430,16 +428,6 @@ class ImageGallery {
 
         this._acceptTuneView();
     }
-
-    /**
-     * @private
-     * Validate image url
-     * @param {string} imgUrl — Image URL to be validated
-     */
-    _isImgUrl(imgUrl) {
-        return imgUrl.match(/https?:\/\/\S+\.(gif|jpe?g|tiff|png|webp)$/i)
-    }
-
 }
 
 module.exports = ImageGallery;
