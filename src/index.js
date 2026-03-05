@@ -1,10 +1,5 @@
-/**
- * Build styles
- */
-require('./index.css').toString();
-require('./gallery-grid/gallery-grid.css').toString();
-
-import GalleryGrid from './gallery-grid/gallery-grid';
+import './index.less';
+import {GalleryGrid} from './gallery-grid/gallery-grid';
 import Sortable from 'sortablejs';
 
 /**

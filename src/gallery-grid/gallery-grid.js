@@ -1,4 +1,6 @@
-class GalleryGrid {
+import './gallery-grid.less';
+
+export class GalleryGrid {
 
     loadGallery(container) {
 
@@ -89,6 +91,3 @@ class GalleryGrid {
         if (options.columnWidth) element.style.setProperty('--column-width', options.columnWidth + 'px');
     }
 }
-
-if(typeof module !== 'undefined') module.exports = GalleryGrid;
-else if(window) window.GalleryGrid = GalleryGrid;
