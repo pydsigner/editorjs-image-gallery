@@ -4,7 +4,6 @@ class GalleryGrid {
 
         const root = document.querySelector("body, html");
         const images = container.querySelectorAll(".gg-box > img");
-        const l = images.length;
 
         images.forEach((image) => {
             image.addEventListener("click", function (i) {
@@ -24,27 +23,21 @@ class GalleryGrid {
                 root.style.overflow = 'hidden';
                 screenItem.innerHTML = '<div class="gg-image"></div><div class="gg-close gg-btn">&times</div><div class="gg-next gg-btn">&rarr;</div><div class="gg-prev gg-btn">&larr;</div>';
 
-                const first = images[0].id, last = images[l - 1].id;
-                const imgItem = document.querySelector(".gg-image"), prevBtn = document.querySelector(".gg-prev"),
-                    nextBtn = document.querySelector(".gg-next"), close = document.querySelector(".gg-close");
-                imgItem.innerHTML = '<img src="' + currentImg.src + '" id="' + currentImg.id + '" />';
+                const imgItem = container.querySelector(".gg-image");
+                const prevBtn = container.querySelector(".gg-prev");
+                const nextBtn = container.querySelector(".gg-next")
+                const close = container.querySelector(".gg-close");
+                imgItem.innerHTML = `<img src="${currentImg.src}"/>`;
 
-                if (l > 1) {
-                    if (route === first) {
-                        prevBtn.hidden = true;
-                        prevImg = false;
-                        let nextImg = currentImg.nextElementSibling;
-                    } else if (route === last) {
-                        nextBtn.hidden = true;
-                        nextImg = false;
-                        let prevImg = currentImg.previousElementSibling;
-                    } else {
-                        let prevImg = currentImg.previousElementSibling;
-                        let nextImg = currentImg.nextElementSibling;
-                    }
+                if (currentImg.nextElementSibling) {
+                    nextImg = currentImg.nextElementSibling;
+                } else {
+                    nextBtn.hidden = true;
+                }
+                if (currentImg.previousElementSibling) {
+                    prevImg = currentImg.previousElementSibling;
                 } else {
                     prevBtn.hidden = true;
-                    nextBtn.hidden = true;
                 }
 
                 screenItem.addEventListener("click", function (e) {
@@ -60,20 +53,20 @@ class GalleryGrid {
                 const prev = () => {
                     prevImg = currentImg.previousElementSibling;
                     if (prevImg) {
-                        imgItem.innerHTML = '<img src="' + prevImg.src + '" id="' + prevImg.id + '" />';
+                        imgItem.innerHTML = `<img src="${prevImg.src}"/>`;
                         currentImg = currentImg.previousElementSibling;
-                        nextBtn.hidden = false;
-                        prevBtn.hidden = getMainImg() === first;
+                        nextBtn.hidden = !Boolean(currentImg.nextElementSibling);
+                        prevBtn.hidden = !Boolean(currentImg.previousElementSibling);
                     }
                 };
 
                 const next = () => {
                     nextImg = currentImg.nextElementSibling;
                     if (nextImg) {
-                        imgItem.innerHTML = '<img src="' + nextImg.src + '" id="' + nextImg.id + '" />';
+                        imgItem.innerHTML = `<img src="${nextImg.src}"/>`;
                         currentImg = currentImg.nextElementSibling;
-                        prevBtn.hidden = false;
-                        nextBtn.hidden = getMainImg() === last;
+                        nextBtn.hidden = !Boolean(currentImg.nextElementSibling);
+                        prevBtn.hidden = !Boolean(currentImg.previousElementSibling);
                     }
                 };
 

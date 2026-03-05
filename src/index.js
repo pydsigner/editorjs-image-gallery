@@ -67,7 +67,7 @@ class ImageGallery {
          * Tool's initial data
          */
         this.data = {
-            urls: data.urls || '',
+            urls: data.urls || [],
             editImages: data.editImages !== undefined ? data.editImages : true,
             bkgMode: data.bkgMode !== undefined ? data.bkgMode : false,
             layoutDefault: data.layoutDefault !== undefined ? data.layoutDefault : true,
@@ -132,10 +132,6 @@ class ImageGallery {
             });
         }
 
-        /**
-         * Save block index
-         */
-        this.blockIndex = this.api.blocks.getCurrentBlockIndex();
         this.gg = new GalleryGrid();
     }
 
@@ -151,24 +147,24 @@ class ImageGallery {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('image-gallery');
 
-        if (this.data && this.data.urls) {
-            this._imageGallery(this.data.urls);
-            return this.wrapper;
-        } else if (this.addImages) {
-            this._toggleTune('addImages');
-        }
         if (!this.addImages) {
             const textarea = document.createElement('textarea');
-            textarea.className = "image-gallery-" + this.blockIndex;
             textarea.placeholder = 'Paste your photos URL ...';
-            ['paste', 'change', 'keyup'].forEach(evt =>
+            textarea.value = this.data.urls.map((img) => img.src).join('\n');
+            ['paste', 'change'].forEach(evt =>
                 textarea.addEventListener(evt, (event) => {
                     const urls = (evt === 'paste' ? event.clipboardData.getData('text') : textarea.value);
                     this._imageGallery(urls.split("\n").filter((v) => v.trim()));
                 }, false)
             );
-            textarea.value = this.data && this.data.urls ? this.data.urls : '';
             this.wrapper.appendChild(textarea);
+        }
+
+        if (this.data && this.data.urls) {
+            this._imageGallery(this.data.urls);
+            return this.wrapper;
+        } else if (this.addImages) {
+            this._toggleTune('addImages');
         }
 
         this.nodes.wrapper = this.wrapper;
@@ -313,8 +309,8 @@ class ImageGallery {
      */
     _acceptTuneView() {
 
-        let gallery = this.wrapper.querySelector('div.gg-box');
-        let urlsInput = this.wrapper.querySelector('textarea');
+        const gallery = this.wrapper.querySelector('div.gg-box');
+        const urlsInput = this.wrapper.querySelector('textarea');
 
         if (gallery !== null) {
 
@@ -399,7 +395,6 @@ class ImageGallery {
         urls.forEach((url, index) => {
             imgCount += 1;
             let img = document.createElement('img');
-            img.id = `gg-img-${this.blockIndex}-${index}`;
             img.src = url.toString().trim();
             box.appendChild(img);
         });
