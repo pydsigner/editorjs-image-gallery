@@ -1,5 +1,5 @@
 import './index.less';
-import {GalleryGrid} from './gallery-grid/gallery-grid';
+import {GalleryGrid} from './gallery-grid.js';
 import Sortable from 'sortablejs';
 
 /**

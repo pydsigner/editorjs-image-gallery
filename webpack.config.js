@@ -1,5 +1,14 @@
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        'imageGallery': {
+            import: './src/index.js',
+            filename: 'bundle.js'
+        },
+        'galleryWidget': {
+            import: './src/gallery-grid.js',
+            filename: 'gallery.js'
+        }
+    },
     module: {
         rules: [
             {
@@ -28,8 +37,7 @@ module.exports = {
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
-        filename: 'bundle.js',
-        library: 'imageGallery',
+        library: '[name]',
         libraryTarget: 'umd'
     }
 };
