@@ -2,104 +2,80 @@
 
 ![](/assets/logo_small.png "editorjs-image-gallery")
 
-<br>
-<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" >
-<img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" >
-<img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" >
-<br><br>
-<a href="#"><img src="https://img.shields.io/badge/Editor.js-2.22.2-blue"></a>
-<a href="https://paypal.me/rodrigoodhin"><img src="https://img.shields.io/badge/donate-PayPal-blue"></a>
 </div>
 
 
-# Image Gallery Tool for Editor.js  
+# Image Gallery Tool for Editor.js
 
-Image Gallery Tool is a plugin for [Editor.js](https://editorjs.io) that's provides an Image Gallery Block and using the available options, it's possible to adapt the layout as you like.
+Image Gallery Tool is a plugin for [Editor.js](https://editorjs.io) that provides an Image Gallery Block with a flexible layout.
 
-Works only with image URLs and requires no server-side uploader.
+The gallery operates on image URLs and does not require a server-side uploader, but offers a way to integrate one.
 
 ![](/assets/image_gallery_01_small.gif)
 ![](/assets/image_gallery_02_small.gif)
 ![](/assets/image_gallery_03_small.gif)
 ![](/assets/image_gallery_04_small.gif)
 
-&nbsp;
-&nbsp;
-&nbsp;
+The gallery also supports drag and drop to rearrange images and one-click image removal.
 
 ## Installation
 
 ### Install via NPM
 
-Get the package
+Get the package:
 
 ```shell
-npm i --save-dev @rodrigoodhin/editorjs-image-gallery
+npm i @d48io/editorjs-image-gallery
 ```
 
-Include module at your application
+Include module in your application:
 
 ```javascript
-const ImageGallery = require('@rodrigoodhin/editorjs-image-gallery');
+import {ImageGallery} from '@d48io/editorjs-image-gallery';
 ```
 
-&nbsp;
-&nbsp;
-&nbsp;
+### Include as CJS script
 
-### Download to your project's source dir
-
-1. Upload folder `dist` from repository
-2. Add `dist/bundle.js` file to your page.
-
-&nbsp;
-&nbsp;
-&nbsp;
-
-### Load from CDN
-
-You can load specific version of package from [jsDelivr CDN](https://www.npmjs.com/package/@rodrigoodhin/editorjs-image-gallery).
-
-`https://cdn.jsdelivr.net/npm/@rodrigoodhin/editorjs-image-gallery@latest`
-
-Then require this script on page with Editor.js.
-
+Download `dist/bundle.js` and add to your project:
 ```html
-<script src="..."></script>
+<script src="/static/editorjs-image-gallery/bundle.js"></script>
 ```
 
-&nbsp;
-&nbsp;
-&nbsp;
+Or load from a CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@d48io/editorjs-image-gallery@latest"></script>
+```
 
-## Usage
-
-Add a new Tool to the `tools` property of the Editor.js initial config.
-
-```javascript
+Then add to your Editor:
+```html
+<script>
 var editor = EditorJS({
   ...
-  
   tools: {
     ...
-    imageGallery: ImageGallery,
+    imageGallery: imageGallery.ImageGallery,
   }
-  
-  ...
 });
 ```
 
-&nbsp;
-&nbsp;
-&nbsp;
-
 ## Config Params
 
-This Tool has no config params
+This tool accepts one optional configuration parameter, a function that returns a promise for an array of URLs to add to the gallery:
 
-&nbsp;
-&nbsp;
-&nbsp;
+```js
+{
+  addImages: () => {
+    return new Promise((resolve, reject) => {
+      resolve([
+        "https://picsum.photos/300/200",
+        "https://picsum.photos/200/300",
+      ]);
+    }
+  }
+}
+```
+
+If this parameter is supplied, the default text entry for URLs is disabled.
 
 ## Tool's settings
 
@@ -121,7 +97,7 @@ This Tool has no config params
 
 | Field               | Type       | Description                   |
 | ------------------- | ---------- | ----------------------------- |
-| urls                | `[]string` | image's url                   |
+| urls                | `string[]` | image's url                   |
 | editImages          | `boolean`  | Show and hide image urls      |
 | bkgMode             | `boolean`  | Activate/Deactivate dark mode |
 | layoutDefault       | `boolean`  | Set default layout            |
@@ -136,8 +112,6 @@ This Tool has no config params
   "type": "imageGallery",
   "data": {
     "urls": [
-      "https://www.nawpic.com/media/2020/ocean-nawpic-15.jpg",
-      "https://www.nawpic.com/media/2020/ocean-nawpic-18.jpg",
       "https://wallpapercave.com/wp/6L4TVMP.jpg",
       "https://wallpapercave.com/wp/wp9810772.jpg",
       "https://wallpapercave.com/wp/wp9121482.jpg",
@@ -154,18 +128,6 @@ This Tool has no config params
   }
 }
 ```
-
-&nbsp;
-&nbsp;
-&nbsp;
-
-## Example
-
-[JSFiddle with an example](https://jsfiddle.net/rodrigoodhin/1mr32g8n/19)
-
-&nbsp;
-&nbsp;
-&nbsp;
 
 ## LICENSE
 

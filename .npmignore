@@ -1,4 +1,6 @@
 .idea/
+.github/
 assets/
+public/
 webpack.config.js
 yarn.lock
