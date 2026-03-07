@@ -10,11 +10,7 @@ import Sortable from 'sortablejs';
  * @property {string[]} urls — images URL
  * @property {boolean} editImages - activate or deactivate for show textarea with images urls
  * @property {boolean} bkgMode - activate or deactivate dark mode
- * @property {boolean} layoutDefault - should layout be the default
- * @property {boolean} layoutHorizontal - should layout be the horizontal
- * @property {boolean} layoutSquare - should layout be the square
- * @property {boolean} layoutWithGap - should layout be with gap
- * @property {boolean} layoutWithFixedSize - should layout be with fixed size
+ * @property {string} layout - layout of gallery: 'flexible', 'masonry', 'square' or 'landscape'
  */
 
 /**
