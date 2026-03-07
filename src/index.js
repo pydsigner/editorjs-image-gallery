@@ -142,8 +142,18 @@ export class ImageGallery {
      */
     save(blockContent) {
         const photos = blockContent.querySelectorAll('.gg-box img');
+        const urls = [];
+        const meta = [];
+        photos.forEach((img) => {
+            urls.push(img.src);
+            meta.push({
+                width: img.naturalWidth,
+                height: img.naturalHeight,
+            });
+        });
         return Object.assign(this.data, {
-            urls: Array.from(photos).map((img) => img.src),
+            urls: urls,
+            meta: meta
         });
     }
 
