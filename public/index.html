@@ -1,45 +1,59 @@
-<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-<script src="../dist/bundle.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor.js Image Gallery Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script src="../dist/bundle.js"></script>
+    <style>
+        .ce-block__content, .ce-toolbar__content {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div id="editorjs"></div>
 
-<div id="editorjs"></div>
+    <button id="save-button">Save</button>
+    <pre id="output"></pre>
 
-<button id="save-button">Save</button>
-<pre id="output"></pre>
-
-<script>
-    /**
-     * Initialize the Editor
-     */
-    const editor = new EditorJS({
+    <script>
         /**
-         * Create a holder for the Editor and pass its ID
+         * Initialize the Editor
          */
-        holder : 'editorjs',
+        const editor = new EditorJS({
+            /**
+             * Create a holder for the Editor and pass its ID
+             */
+            holder : 'editorjs',
 
-        /**
-         * Available Tools list.
-         * Pass Tool's class or Settings object for each Tool you want to use
-         */
-        tools: {
-            imageGallery: {
-                class: imageGallery.ImageGallery,
-                inlineToolbar : true
+            /**
+             * Available Tools list.
+             * Pass Tool's class or Settings object for each Tool you want to use
+             */
+            tools: {
+                imageGallery: {
+                    class: imageGallery.ImageGallery,
+                    inlineToolbar : true
+                },
             },
-        },
 
-        /**
-         * Previously saved data that should be rendered
-         */
-        data: {}
-    });
+            /**
+             * Previously saved data that should be rendered
+             */
+            data: {}
+        });
 
 
-    const saveButton = document.getElementById('save-button');
-    const output = document.getElementById('output');
+        const saveButton = document.getElementById('save-button');
+        const output = document.getElementById('output');
 
-    saveButton.addEventListener('click', () => {
-        editor.save().then( savedData => {
-            output.innerHTML = JSON.stringify(savedData, null, 4);
+        saveButton.addEventListener('click', () => {
+            editor.save().then( savedData => {
+                output.innerHTML = JSON.stringify(savedData, null, 4);
+            })
         })
-    })
-</script>
+    </script>
+</body>
+</html>

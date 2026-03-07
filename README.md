@@ -11,10 +11,7 @@ Image Gallery Tool is a plugin for [Editor.js](https://editorjs.io) that provide
 
 The gallery operates on image URLs and does not require a server-side uploader, but offers a way to integrate one.
 
-![](/assets/image_gallery_01_small.gif)
-![](/assets/image_gallery_02_small.gif)
-![](/assets/image_gallery_03_small.gif)
-![](/assets/image_gallery_04_small.gif)
+![](/assets/editorjs-image-gallery.webm)
 
 The gallery also supports drag and drop to rearrange images and one-click image removal.
 

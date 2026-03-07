@@ -41,20 +41,6 @@ export class ImageGallery {
 
         this.config = config
         this.addImages = config.addImages
-        /**
-         * Nodes cache
-         */
-        this.nodes = {
-            wrapper: null,
-            urls: null,
-            editImages: null,
-            bkgMode: null,
-            layoutDefault: null,
-            layoutHorizontal: null,
-            layoutSquare: null,
-            layoutWithGap: null,
-            layoutWithFixedSize: null,
-        };
 
         /**
          * Tool's initial data
@@ -63,11 +49,7 @@ export class ImageGallery {
             urls: data.urls || [],
             editImages: data.editImages !== undefined ? data.editImages : true,
             bkgMode: data.bkgMode !== undefined ? data.bkgMode : false,
-            layoutDefault: data.layoutDefault !== undefined ? data.layoutDefault : true,
-            layoutHorizontal: data.layoutHorizontal !== undefined ? data.layoutHorizontal : false,
-            layoutSquare: data.layoutSquare !== undefined ? data.layoutSquare : false,
-            layoutWithGap: data.layoutWithGap !== undefined ? data.layoutWithGap : false,
-            layoutWithFixedSize: data.layoutWithFixedSize !== undefined ? data.layoutWithFixedSize : false,
+            layout: data.layout !== undefined ? data.layout : 'flexible',
         };
 
         /**
@@ -86,29 +68,24 @@ export class ImageGallery {
                 title: 'Background Mode',
             },
             {
-                name: 'layoutDefault',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns" viewBox="0 0 16 16"><path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V2zm8.5 0v8H15V2H8.5zm0 9v3H15v-3H8.5zm-1-9H1v3h6.5V2zM1 14h6.5V6H1v8z"/></svg>`,
-                title: 'Default Layout',
+                name: 'layoutFlexible',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-1x2" viewBox="0 0 16 16"><path d="M6 1H1v14h5zm9 0h-5v5h5zm0 9v5h-5v-5zM0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1zm1 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1z"/></svg>`,
+                title: 'Flexible Layout',
             },
             {
-                name: 'layoutHorizontal',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x2-gap" viewBox="0 0 16 16"><path d="M4 4v2H2V4h2zm1 7V9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm5 5V9a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zM9 4v2H7V4h2zm5 0h-2v2h2V4zM4 9v2H2V9h2zm5 0v2H7V9h2zm5 0v2h-2V9h2zm-3-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-2z"/></svg>`,
-                title: 'Horizontal Layout',
+                name: 'layoutMasonry',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16"><path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3h-5v-3h5zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8v7H1V8h5zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6v7h-5V1h5zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"/></svg>`,
+                title: 'Masonry Layout',
             },
             {
                 name: 'layoutSquare',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/></svg>`,
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/></svg>`,
                 title: 'Square Layout',
             },
             {
-                name: 'layoutWithGap',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16"><path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3h-5v-3h5zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8v7H1V8h5zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6v7h-5V1h5zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"/></svg>`,
-                title: 'Layout With Gap',
-            },
-            {
-                name: 'layoutWithFixedSize',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3" viewBox="0 0 16 16"><path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5V5h4V1H1.5zM5 6H1v4h4V6zm1 4h4V6H6v4zm-1 1H1v3.5a.5.5 0 0 0 .5.5H5v-4zm1 0v4h4v-4H6zm5 0v4h3.5a.5.5 0 0 0 .5-.5V11h-4zm0-1h4V6h-4v4zm0-5h4V1.5a.5.5 0 0 0-.5-.5H11v4zm-1 0V1H6v4h4z"/></svg>`,
-                title: 'Layout With Fixed Size',
+                name: 'layoutLandscape',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-aspect-ratio" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/><path d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0z"/></svg>`,
+                title: 'Landscape Layout',
             },
         ];
         if (this.addImages) {
@@ -159,8 +136,6 @@ export class ImageGallery {
         } else if (this.addImages) {
             this._toggleTune('addImages');
         }
-
-        this.nodes.wrapper = this.wrapper;
         return this.wrapper;
     }
 
@@ -200,11 +175,7 @@ export class ImageGallery {
             urls: {},
             editImages: {},
             bkgMode: {},
-            layoutDefault: {},
-            layoutHorizontal: {},
-            layoutSquare: {},
-            layoutWithGap: {},
-            layoutWithFixedSize: {},
+            layout: {},
         };
     }
 
@@ -240,7 +211,7 @@ export class ImageGallery {
             let button = document.createElement('div');
 
             button.classList.add('cdx-settings-button');
-            if (this.data[tune.name]) {
+            if (this._tuneActive(tune.name)) {
                 button.classList.add('cdx-settings-button--active');
             }
             button.innerHTML = tune.icon;
@@ -251,7 +222,7 @@ export class ImageGallery {
             button.addEventListener('click', () => {
                 this._toggleTune(tune.name);
                 wrp.querySelectorAll('.cdx-settings-button').forEach(e => {
-                    if (this.data[e.dataset.tuneName]) {
+                    if (this._tuneActive(e.dataset.tuneName)) {
                         e.classList.add('cdx-settings-button--active');
                     } else {
                         e.classList.remove('cdx-settings-button--active');
@@ -262,6 +233,14 @@ export class ImageGallery {
 
         return wrp;
     }
+
+    _tuneToLayout(tune) {
+        return tune.substring(6).toLowerCase();
+    }
+    _tuneActive(tune) {
+        return (tune.startsWith('layout') && this.data.layout === this._tuneToLayout(tune)) || this.data[tune];
+    }
+
 
     /**
      * @private
@@ -276,15 +255,10 @@ export class ImageGallery {
                 this.data.urls.push(...urls);
                 this._imageGallery(this.data.urls);
             });
+        } else if (tune.startsWith('layout')) {
+            this.data['layout'] = this._tuneToLayout(tune);
         } else {
-            this.settings.forEach(t => {
-                if (t.name.startsWith('layout')) {
-                    if (t.name === tune)
-                        this.data[t.name] = true;
-                    else
-                        this.data[t.name] = false;
-                }
-            });
+            console.warn(`Unknown tune ${tune}`);
         }
 
         this._acceptTuneView();
@@ -316,28 +290,7 @@ export class ImageGallery {
         } else {
             container.removeAttribute('data-theme');
         }
-
-        if (this.data.layoutHorizontal) {
-            container.setAttribute('data-layout', 'horizontal');
-        } else if (this.data.layoutSquare) {
-            container.setAttribute('data-layout', 'square');
-        } else {
-            container.setAttribute('data-layout', 'default');
-        }
-
-        if (this.data.layoutWithGap) {
-            container.style.setProperty('--gap-length', '10px');
-        } else {
-            container.style.removeProperty('--gap-length');
-        }
-
-        if (this.data.layoutWithFixedSize) {
-            container.style.setProperty('--row-height', '180px');
-            container.style.setProperty('--column-width', '280px');
-        } else {
-            container.style.removeProperty('--row-height');
-            container.style.removeProperty('--column-width');
-        }
+        container.setAttribute('data-layout', this.data.layout);
     }
 
     /**
@@ -385,6 +338,10 @@ export class ImageGallery {
             });
             imgWrap.appendChild(deleteBtn);
             const img = document.createElement('img');
+            img.addEventListener('load', () => {
+                imgWrap.style.setProperty('--gg-h', img.naturalHeight);
+                imgWrap.style.setProperty('--gg-w', img.naturalWidth);
+            });
             img.src = url;
             imgWrap.appendChild(img);
             box.appendChild(imgWrap);
