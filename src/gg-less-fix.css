@@ -1,3 +1,0 @@
-[data-layout="flexible"] .gg-box .gg-img {
-    --column-span: calc(max(1, round(up, var(--gg-ratio, 1) * 2)));
-}

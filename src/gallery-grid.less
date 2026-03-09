@@ -1,5 +1,3 @@
-@import (inline) './gg-less-fix.css';
-
 .gg-container {
     --main-color: #000;
     --secondary-color: #111;
@@ -42,6 +40,7 @@
         row-gap: 0;
 
         .gg-img {
+            --column-span: ~"calc(max(1, round(up, var(--gg-ratio, 1) * 2)));"
             --row-span: calc(var(--column-width) * var(--column-span) / var(--gg-ratio) + var(--gap-length));
             overflow: hidden;
             &:not(:last-child) {
