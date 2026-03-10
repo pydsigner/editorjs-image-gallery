@@ -89,6 +89,11 @@ export class ImageGallery {
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-aspect-ratio" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/><path d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0z"/></svg>`,
                 title: 'Landscape Layout',
             },
+            {
+                name: 'layoutCarousel',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-distribute-horizontal" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5m-13 0a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5"/><path d="M6 13a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/></svg>`,
+                title: 'Carousel Layout',
+            },
         ];
         if (this.addImages) {
             this.settings.splice(0, 0, {
@@ -303,6 +308,7 @@ export class ImageGallery {
             container.removeAttribute('data-theme');
         }
         container.setAttribute('data-layout', this.data.layout);
+        this.gg.installCarousel(container);
     }
 
     /**
@@ -328,6 +334,7 @@ export class ImageGallery {
             if (urlsInput) {
                 urlsInput.value = Array.from(wrapper.querySelectorAll('.gg-box img')).map((img) => img.src).join('\n');
             }
+            this.gg.installCarousel(gallery);
         }
         const wrapper = this.wrapper;
         this.sortable = new Sortable(box, {

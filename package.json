@@ -41,6 +41,7 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "d3-array": "^3.2.4",
     "sortablejs": "^1.15.7"
   }
 }

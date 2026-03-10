@@ -14,6 +14,9 @@
         --img-bg-color: rgba(20, 20, 20, 0.9);
         --backdrop-color: rgba(30, 30, 30, 0.9);
     }
+    &[data-layout="carousel"] {
+        position: relative;
+    }
 }
 
 .gg-box {
@@ -80,6 +83,76 @@
         --fixed-ratio: 1;
         .gg-img {
             aspect-ratio: var(--fixed-ratio);
+        }
+    }
+    // Ideas from https://modern-css.com/articles/build-a-css-only-carousel/
+    [data-layout="carousel"] & {
+        display: flex;
+        overflow-x: auto;
+        gap: var(--gap-px);
+
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+
+        .scroll-marker-group {
+            display: flex;
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 5px;
+            width: 100%;
+            gap: 0.4em;
+            place-content: center;
+            .scroll-marker {
+                content: '';
+                cursor: pointer;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #ccc;
+                opacity: 0.5;
+            }
+            .scroll-marker-current {
+                background: #222;
+                opacity: 0.8;
+            }
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: calc(50% - 18px);
+            z-index: 1;
+
+            border: none;
+            padding: 10px;
+
+            background-color: #222;
+
+            opacity: 0.5;
+            &:hover {
+                opacity: 0.8;
+            }
+            &:disabled {
+                display: none;
+            }
+        }
+        .scroll-button-left {
+            content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' class='bi bi-chevron-compact-left' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223'/></svg>") / "Next Image";
+            border-radius: 0 10px 10px 0;
+            left: 0;
+        }
+        .scroll-button-right {
+            content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' class='bi bi-chevron-compact-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671'/></svg>") / "Previous Image";
+            border-radius: 10px 0 0 10px;
+            right: 0;
+        }
+
+        .gg-img {
+            width: calc(var(--column-width-px) * var(--gg-ratio) * 3);
+            height: calc(var(--column-width-px) * 3);
+            aspect-ratio: var(--gg-ratio);
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+
         }
     }
 }
