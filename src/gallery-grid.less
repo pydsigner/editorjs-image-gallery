@@ -62,6 +62,13 @@
             }
         }
     }
+    [data-layout="gapless"] & {
+        .gg-img {
+            --column-span: ~"calc(max(1, round(up, var(--gg-ratio, 1) * 2)))";
+            --row-span: ~"calc(round(var(--column-span) / var(--gg-ratio)))";
+            aspect-ratio: calc(var(--column-span) / var(--row-span));
+        }
+    }
     [data-layout="landscape"] & {
         --fixed-ratio: 16 / 9;
         .gg-img {
