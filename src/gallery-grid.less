@@ -18,10 +18,11 @@
 
 .gg-box {
     --column-width-px: calc(var(--column-width) * 1px);
+    --gap-px: calc(var(--gap-length) * 1px);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--column-width-px), 1fr));
     grid-template-rows: 1fr;
-    gap: calc(var(--gap-length) * 1px);
+    gap: var(--gap-px);
     margin: 20px 0;
 
     img {
@@ -40,11 +41,11 @@
         row-gap: 0;
 
         .gg-img {
-            --column-span: ~"calc(max(1, round(up, var(--gg-ratio, 1) * 2)));"
+            --column-span: ~"calc(max(1, round(up, var(--gg-ratio, 1) * 2)))";
             --row-span: calc(var(--column-width) * var(--column-span) / var(--gg-ratio) + var(--gap-length));
             overflow: hidden;
             &:not(:last-child) {
-                margin-bottom: calc(var(--gap-length) * 1px);
+                margin-bottom: var(--gap-px);
             }
         }
     }
@@ -57,7 +58,7 @@
             --row-span: calc(var(--column-width) * var(--column-span) / var(--gg-ratio) + var(--gap-length));
             overflow: hidden;
             &:not(:last-child) {
-                margin-bottom: calc(var(--gap-length) * 1px);
+                margin-bottom: var(--gap-px);
             }
         }
     }
